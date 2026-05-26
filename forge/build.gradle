@@ -1,5 +1,4 @@
 plugins {
-    id 'net.ninjadev.ninjamulti.loader'
     id 'net.minecraftforge.gradle' version '[7.0.17,8)'
 }
 
