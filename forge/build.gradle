@@ -1,10 +1,13 @@
 plugins {
-    id 'multiloader-loader'
+    id 'net.ninjadev.ninjamulti.loader'
     id 'net.minecraftforge.gradle' version '[7.0.17,8)'
 }
 
-base {
-    archivesName = "${mod_name}-forge-${minecraft_version}"
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
 }
 
 minecraft {
@@ -17,13 +20,6 @@ minecraft {
             args '--nogui'
         }
     }
-}
-
-repositories {
-    minecraft.mavenizer(it)
-    maven fg.forgeMaven
-    maven fg.minecraftLibsMaven
-    mavenCentral()
 }
 
 sourceSets.main.resources {

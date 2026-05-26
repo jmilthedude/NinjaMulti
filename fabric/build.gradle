@@ -1,5 +1,5 @@
 plugins {
-    id 'multiloader-loader'
+    id 'net.ninjadev.ninjamulti.loader'
     id 'net.fabricmc.fabric-loom'
 }
 

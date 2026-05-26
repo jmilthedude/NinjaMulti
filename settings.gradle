@@ -1,5 +1,9 @@
 pluginManagement {
     repositories {
+        maven {
+            name = 'NinjaMultiLocal'
+            url = uri('file:///C:/Users/jmils/IntelliJ/Multi/.local-maven')
+        }
         gradlePluginPortal()
         mavenCentral()
         exclusiveContent {
