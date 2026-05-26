@@ -1,0 +1,31 @@
+# Compiled classes
+build/
+*/build/
+buildSrc/build/
+
+# Gradle
+.gradle/
+gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.settings/
+.classpath
+.project
+.vscode/
+
+# Runtime
+run/
+runs/
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local mod dev
+remappedSrc/

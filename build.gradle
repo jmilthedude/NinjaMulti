@@ -1,0 +1,81 @@
+plugins {
+    id 'java-base'
+    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT' apply false
+    id 'net.neoforged.moddev' version '2.0.141' apply false
+}
+
+tasks.register('universalJar', Jar) {
+    group = 'build'
+    description = 'Creates a single JAR that works on Fabric, Forge, and NeoForge'
+    dependsOn ':fabric:jar', ':forge:jar', ':neoforge:jar'
+
+    archiveFileName = "${mod_name}-${minecraft_version}-${version}.jar"
+    destinationDirectory = layout.buildDirectory.dir('libs')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    def modPackagePath = "${group.replace('.', '/')}/ninjamulti/**"
+
+    from(zipTree(project(':forge').tasks.jar.archiveFile)) {
+        include modPackagePath
+        exclude '**/FabricPlatformHelper.class'
+        exclude '**/FabricPlatformHelper$*.class'
+        exclude '**/FabricRegistrationHelper.class'
+        exclude '**/FabricRegistrationHelper$*.class'
+        exclude '**/NeoForgePlatformHelper.class'
+        exclude '**/NeoForgePlatformHelper$*.class'
+        exclude '**/NeoForgeRegistrationHelper.class'
+        exclude '**/NeoForgeRegistrationHelper$*.class'
+        exclude '**/NinjaMultiFabric.class'
+        exclude '**/NinjaMultiFabric$*.class'
+        exclude '**/NinjaMultiNeoforge.class'
+        exclude '**/NinjaMultiNeoforge$*.class'
+        include 'assets/**'
+        include 'data/**'
+        include 'pack.mcmeta'
+    }
+
+    from(zipTree(project(':fabric').tasks.jar.archiveFile)) {
+        include '**/NinjaMultiFabric.class'
+        include '**/FabricPlatformHelper.class'
+        include '**/FabricPlatformHelper$*.class'
+        include '**/FabricRegistrationHelper.class'
+        include '**/FabricRegistrationHelper$*.class'
+    }
+
+    from(zipTree(project(':neoforge').tasks.jar.archiveFile)) {
+        include '**/NinjaMultiNeoforge.class'
+        include '**/NeoForgePlatformHelper.class'
+        include '**/NeoForgePlatformHelper$*.class'
+        include '**/NeoForgeRegistrationHelper.class'
+        include '**/NeoForgeRegistrationHelper$*.class'
+    }
+
+    def expandProps = ['version'                      : version,
+                       'group'                        : project.group,
+                       'minecraft_version'            : minecraft_version,
+                       'minecraft_version_range'      : minecraft_version_range,
+                       'fabric_version'               : fabric_version,
+                       'fabric_loader_version'        : fabric_loader_version,
+                       'mod_name'                     : mod_name,
+                       'mod_author'                   : mod_author,
+                       'mod_id'                       : mod_id,
+                       'license'                      : license,
+                       'description'                  : project.findProperty('description') ?: '',
+                       'neoforge_version'             : neoforge_version,
+                       'neoforge_loader_version_range': neoforge_loader_version_range,
+                       'forge_version'                : forge_version,
+                       'forge_loader_version_range'   : forge_loader_version_range,
+                       'credits'                      : credits,
+                       'java_version'                 : java_version]
+    from('universal') {
+        filesMatching(['fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+            expand expandProps
+        }
+    }
+
+    manifest {
+        attributes([
+            'MixinConfigs': 'ninjamulti.mixins.json'
+        ])
+    }
+}
