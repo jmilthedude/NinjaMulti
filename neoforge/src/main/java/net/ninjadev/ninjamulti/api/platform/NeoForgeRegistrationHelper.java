@@ -15,12 +15,14 @@ import java.util.function.Supplier;
 
 public class NeoForgeRegistrationHelper implements IRegistrationHelper {
 
+    private final String modId;
     private final DeferredRegister<Block> blocks;
     private final DeferredRegister<Item> items;
     private final DeferredRegister<CreativeModeTab> tabs;
     private final DeferredRegister<ParticleType<?>> particles;
 
     public NeoForgeRegistrationHelper(String modId, IEventBus modBus) {
+        this.modId = modId;
         this.blocks = DeferredRegister.create(Registries.BLOCK, modId);
         this.items = DeferredRegister.create(Registries.ITEM, modId);
         this.tabs = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, modId);
@@ -29,6 +31,11 @@ public class NeoForgeRegistrationHelper implements IRegistrationHelper {
         items.register(modBus);
         tabs.register(modBus);
         particles.register(modBus);
+    }
+
+    @Override
+    public String getModId() {
+        return modId;
     }
 
     @Override

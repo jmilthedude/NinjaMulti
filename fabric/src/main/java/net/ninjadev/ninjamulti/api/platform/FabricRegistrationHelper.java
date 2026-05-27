@@ -21,6 +21,11 @@ public class FabricRegistrationHelper implements IRegistrationHelper {
     }
 
     @Override
+    public String getModId() {
+        return modId;
+    }
+
+    @Override
     public <T extends Block> Supplier<T> registerBlock(String name, Supplier<T> blockSupplier) {
         T block = blockSupplier.get();
         Registry.register(BuiltInRegistries.BLOCK,

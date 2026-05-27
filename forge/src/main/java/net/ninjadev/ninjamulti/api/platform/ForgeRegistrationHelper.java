@@ -15,12 +15,14 @@ import java.util.function.Supplier;
 
 public class ForgeRegistrationHelper implements IRegistrationHelper {
 
+    private final String modId;
     private final DeferredRegister<Block> blocks;
     private final DeferredRegister<Item> items;
     private final DeferredRegister<CreativeModeTab> tabs;
     private final DeferredRegister<ParticleType<?>> particles;
 
     public ForgeRegistrationHelper(String modId, BusGroup modBusGroup) {
+        this.modId = modId;
         this.blocks = DeferredRegister.create(Registries.BLOCK, modId);
         this.items = DeferredRegister.create(Registries.ITEM, modId);
         this.tabs = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, modId);
@@ -29,6 +31,11 @@ public class ForgeRegistrationHelper implements IRegistrationHelper {
         items.register(modBusGroup);
         tabs.register(modBusGroup);
         particles.register(modBusGroup);
+    }
+
+    @Override
+    public String getModId() {
+        return modId;
     }
 
     @Override
