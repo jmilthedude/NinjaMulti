@@ -1,6 +1,8 @@
 package net.ninjadev.ninjamulti.api;
 
 import net.ninjadev.ninjamulti.api.services.IPlatformHelper;
+import net.ninjadev.ninjamulti.api.services.IRegistrationHelper;
+import net.ninjadev.ninjamulti.api.services.IRegistrationHelperFactory;
 
 import java.util.Iterator;
 import java.util.ServiceConfigurationError;
@@ -9,6 +11,11 @@ import java.util.ServiceLoader;
 public class Services {
 
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    private static final IRegistrationHelperFactory REGISTRATION_FACTORY = load(IRegistrationHelperFactory.class);
+
+    public static IRegistrationHelper createRegistrationHelper(String modId, Object... context) {
+        return REGISTRATION_FACTORY.create(modId, context);
+    }
 
     public static <T> T load(Class<T> clazz) {
         Iterator<T> iterator = ServiceLoader.load(clazz).iterator();

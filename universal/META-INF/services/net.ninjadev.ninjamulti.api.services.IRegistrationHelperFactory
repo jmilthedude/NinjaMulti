@@ -1,0 +1,3 @@
+net.ninjadev.ninjamulti.api.platform.FabricRegistrationHelperFactory
+net.ninjadev.ninjamulti.api.platform.ForgeRegistrationHelperFactory
+net.ninjadev.ninjamulti.api.platform.NeoForgeRegistrationHelperFactory
