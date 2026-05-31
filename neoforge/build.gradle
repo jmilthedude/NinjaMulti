@@ -2,12 +2,6 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
-jar {
-    manifest {
-        attributes(["MixinConfigs": "ninjamulti.mixins.json"])
-    }
-}
-
 neoForge {
     version = neoforge_version
 
